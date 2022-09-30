@@ -3,21 +3,27 @@ import React, { Component } from 'react';
 export default class Editor extends Component {
   constructor(props) {
     super(props);
-    this.nameRef = React.createRef();
-    this.categoryRef = React.createRef();
-    this.priceRef = React.createRef();
+    this.formElements = {
+      name: { },
+      category: { },
+      price: { }
+    };
+  }
+
+  setElement = (element) => {
+    if(element !== null) {
+      this.formElements[element.name].element = element;
+    }
   }
 
   handleAdd = () => {
-    this.props.callback({
-      name: this.nameRef.current.value,
-      category: this.categoryRef.current.value,
-      price: this.priceRef.current.value
+    let data = {};
+    Object.values(this.formElements).forEach(v => {
+      data[v.element.name] = v.element.value;
+      v.element.value = "";
     });
-    this.nameRef.current.value = "";
-    this.categoryRef.current.value = "";
-    this.priceRef.current.value = "";
-    this.nameRef.current.focus();
+    this.props.callback(data);
+    this.formElements.name.element.focus();
   }
 
   render() {
@@ -25,15 +31,15 @@ export default class Editor extends Component {
       <>
         <div className="form-group p-2">
           <label>Name</label>
-          <input className="form-control" name="name" autoFocus = { true } ref={ this.nameRef } />
+          <input className="form-control" name="name" autoFocus = { true } ref={ this.setElement } />
         </div>
         <div className="form-group p-2">
           <label>Category</label>
-          <input className="form-control" name="category" ref={ this.categoryRef } />
+          <input className="form-control" name="category" ref={ this.setElement } />
         </div>
         <div className="form-group p-2">
           <label>Price</label>
-          <input className="form-control" name="price" ref={ this.priceRef } />
+          <input className="form-control" name="price" ref={ this.setElement } />
         </div>
         <div className="text-center">
           <button className="btn btn-primary" onClick={ this.handleAdd }>
