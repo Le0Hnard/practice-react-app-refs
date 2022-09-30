@@ -4,9 +4,9 @@ export default class Editor extends Component {
   constructor(props) {
     super(props);
     this.formElements = {
-      name: { },
-      category: { },
-      price: { }
+      name: { label: "Name", name: "name" },
+      category: { label: "Category", name: "category" },
+      price: { label: "Price", name: "price" }
     };
   }
 
@@ -29,18 +29,15 @@ export default class Editor extends Component {
   render() {
     return (
       <>
-        <div className="form-group p-2">
-          <label>Name</label>
-          <input className="form-control" name="name" autoFocus = { true } ref={ this.setElement } />
-        </div>
-        <div className="form-group p-2">
-          <label>Category</label>
-          <input className="form-control" name="category" ref={ this.setElement } />
-        </div>
-        <div className="form-group p-2">
-          <label>Price</label>
-          <input className="form-control" name="price" ref={ this.setElement } />
-        </div>
+        {
+          Object.values(this.formElements).map(elem => 
+            <div className="form-group p-2" key={ elem.name }>
+              <label>{ elem.label }</label>
+              <input className="form-control" name={ elem.name } 
+                autoFocus={ elem.name === "name" } ref={ this.setElement } />
+            </div>
+          )
+        }
         <div className="text-center">
           <button className="btn btn-primary" onClick={ this.handleAdd }>
             Add
