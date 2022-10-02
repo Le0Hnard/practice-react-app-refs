@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FormField from './components/FormField';
+import { ForwardFormField } from './components/FormField';
 
 export default class App extends Component {
   constructor(props) {
@@ -14,7 +14,7 @@ export default class App extends Component {
   render() {
     return (
       <div className="m-2">
-        <FormField label="Name" fieldRef={ this.fieldRef } />
+        <ForwardFormField label="Name" ref={ this.fieldRef } />
         <div className="text-center m-2">
           <button className="btn btn-primary" onClick={ this.handleClick }>
             Focus
